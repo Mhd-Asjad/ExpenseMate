@@ -53,6 +53,7 @@ def add_budget(month , amount):
     click.echo(f"✅ Budget for {month} has been set to ₹{amount:,.2f}.")
 
 @cli.command('show-expense')
+@click.argument('month',type=str)
 @click.option('--month',default=datetime.now().strftime('%Y-%m'), help="The month in YYYY-MM format.")
 def show_expenses(month):
     """ show monthly expenses and personal budget tracker for the given month """
