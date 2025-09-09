@@ -72,7 +72,7 @@ expensse show-expense "2025-08"
 
 ```
 
-## Project Sturcture🧱
+## project structure
 
 ```
 expense_tracker/
