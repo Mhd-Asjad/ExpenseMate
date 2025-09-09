@@ -1,6 +1,6 @@
 # Expense Tracker CLI
 
-A simple **command-line expense tracker** built with Python, Typer, and SQLAlchemy.  
+A simple **command-line expense tracker** built with Python, Click, and SQLAlchemy.  
 It helps you manage expenses, categories, and budgets directly from your terminal.
 
 ---
