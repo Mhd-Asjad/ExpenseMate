@@ -1,10 +1,12 @@
 import click
 from datetime import datetime
-from database import setup_database , add_expense , category_expenses , set_monthly_salary , get_monthly_budgets , get_total_expenses_for_month , display_category_expenses
+from database import setup_database
+from repositories import  add_expense , category_expenses , set_monthly_salary , get_monthly_budgets , get_total_expenses_for_month , display_category_expenses
 import calendar
 from rich.console import Console
 from rich.table import Table
 from rich import box
+
 
 console = Console()
 
@@ -26,14 +28,14 @@ def add(amount, description, category):
     """Add a new expense."""
     add_expense(description, amount, category)
     click.echo(f'Expense "{description}" of amount {amount} added under category "{category}".')
-
+    
 @cli.command('show-category')
 @click.argument('category',type=str)
 def show_category(category):
     """to show the category vise expenses"""
     rows , total_amount = category_expenses(category)
     if not rows:
-        console.print(f"[red] No expenses found for category '{category}' [/red]")
+        console.print(f"[red]No expenses found for category '{category}' [/red]")
     else:
         display_category_expenses(rows, total_amount, category)        
 
@@ -43,7 +45,7 @@ def show_category(category):
 def add_budget(month , amount):
     """ add budget for particular month """
     if amount < 0 :
-        click.echo('add a valid amount for the monthly budget')
+        console.print("[red]Budget amount cannot be negative. [/red]")
         return
         
     set_monthly_salary(month , amount)
@@ -73,16 +75,26 @@ def show_expenses(month):
     daily_spend_allowance = remaining_budget // remaining_days if remaining_days > 0 else remaining_budget
     updated_dayily_spend = daily_spend_allowance if daily_spend_allowance > 0 else None
     
-    click.echo(f"---Budget Status for {month}")
-    click.echo(f"Total budget is ₹{total_budget}")
-    click.echo(f"Amount Spend 💵: ₹{amount_spent}")
-    if isinstance(round(updated_dayily_spend) , int):
-        
-        click.echo(f"Remaining Budget: ₹{remaining_budget}")
-        click.echo(f"💡 You can spend about ₹{daily_spend_allowance:,.2f} per day for the rest of the month.")
-    else :
-        click.echo(f"♨️ you daily allowance is exeeded")
-    click.echo(f"-------------------------------------------------")
+    table = Table(title=f"Budget Status for {month}", box=box.SIMPLE_HEAVY)
 
+    table.add_column("Description", style="cyan", no_wrap=True)
+    table.add_column("Amount (₹)", justify="right", style="green")
+    
+    table.add_row("Total Budget", f"₹{total_budget:,.2f}")
+    table.add_row("Amount Spent 💵", f"₹{amount_spent:,.2f}")
+    table.add_row("Remaining Budget", f"₹{remaining_budget:,.2f}" , style=f"{"green" if round(remaining_budget) > 0 else "red"}")
+    
+    if updated_dayily_spend and isinstance(round(updated_dayily_spend) , int):
+        
+        table.add_row("Remaining Days", str(remaining_days))
+        table.add_row("Daily Spend Allowance", f"₹{daily_spend_allowance:,.2f}")
+    
+    console.print(table)
+    
+    if not updated_dayily_spend :
+        console.print("[bold red]♨️ Your budget for the month has been exeeded![/bold red]")
+    else :
+        console.print(f"you can spend about [bold green]₹{daily_spend_allowance:,.2f}[/bold green] per day for the rest of the month.")
+    
 if __name__ == '__main__':
     cli()
