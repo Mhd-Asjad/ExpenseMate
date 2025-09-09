@@ -1,5 +1,5 @@
-from database import engine
-from models import categories, expenses ,budgets
+from expense_tracker.database.db import engine
+from expense_tracker.models.expense import categories, expenses ,budgets
 import sqlalchemy as db
 from rich.console import Console
 from rich.table import Table
@@ -62,7 +62,7 @@ def display_category_expenses(rows, total_amount, category):
         table.add_row(r.description, f"₹{r.amount:,.2f}")
 
     table.add_row("[bold yellow]Total[/bold yellow]", f"[bold red]₹{total_amount:,.2f}[/bold red]")
-    
+
     console.print(table)
 
 # add montly budget or update existing month budget

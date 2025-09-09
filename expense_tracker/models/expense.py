@@ -1,8 +1,6 @@
 import sqlalchemy as db
 from datetime import datetime
-from database import metadata
-
-
+from expense_tracker.database.db import metadata
 
 categories = db.Table('categories', metadata,
     db.Column('id', db.Integer, primary_key=True),

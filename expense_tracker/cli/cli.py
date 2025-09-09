@@ -1,7 +1,7 @@
 import click
 from datetime import datetime
-from database import setup_database
-from repositories import  add_expense , category_expenses , set_monthly_salary , get_monthly_budgets , get_total_expenses_for_month , display_category_expenses
+from expense_tracker.database.db import setup_database
+from expense_tracker.repositories.expense_repo import  add_expense , category_expenses , set_monthly_salary , get_monthly_budgets , get_total_expenses_for_month , display_category_expenses
 import calendar
 from rich.console import Console
 from rich.table import Table
@@ -12,6 +12,7 @@ console = Console()
 
 @click.group()
 def cli():
+    """Expense Tracker CLI"""
     pass
 
 @cli.command("init-db")
