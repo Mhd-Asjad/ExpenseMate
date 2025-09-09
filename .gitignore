@@ -10,7 +10,7 @@ __pycache__/
 venv/
 .venv/
 env/
-.env/
+.env
 
 # Editor/IDE specific files
 .vscode/
@@ -40,6 +40,7 @@ build/
 # Database files (if applicable, e.g., SQLite)
 *.sqlite3
 db.sqlite3
+.db
 
 # Sensitive information (e.g., configuration files with credentials)
 # Consider using environment variables or a separate, untracked config file for these.
