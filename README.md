@@ -51,9 +51,9 @@ It helps you manage expenses, categories, and budgets directly from your termina
 
 **run the CLI tool**
 
-    ```bash
+ ```bash
     expense --help
-    ```
+ ```
 
 *Example:*
 
