@@ -40,7 +40,8 @@ build/
 # Database files (if applicable, e.g., SQLite)
 *.sqlite3
 db.sqlite3
-.db
+.db/
+expenses.db
 
 # Sensitive information (e.g., configuration files with credentials)
 # Consider using environment variables or a separate, untracked config file for these.

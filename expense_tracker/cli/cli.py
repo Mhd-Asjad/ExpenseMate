@@ -54,7 +54,7 @@ def add_budget(month , amount):
 
 @cli.command('show-expense')
 @click.argument('month',type=str)
-@click.option('--month',default=datetime.now().strftime('%Y-%m'), help="The month in YYYY-MM format.")
+@click.option('--month', default=datetime.now().strftime('%Y-%m'), help="The month in YYYY-MM format.")
 def show_expenses(month):
     """ show monthly expenses and personal budget tracker for the given month """
     total_budget = get_monthly_budgets(month)
@@ -97,6 +97,6 @@ def show_expenses(month):
         console.print("[bold red]♨️ Your budget for the month has been exeeded![/bold red]")
     else :
         console.print(f"you can spend about [bold green]₹{daily_spend_allowance:,.2f}[/bold green] per day for the rest of the month.")
-    
+
 if __name__ == '__main__':
     cli()

@@ -18,22 +18,22 @@ It helps you manage expenses, categories, and budgets directly from your termina
 
 ## Features
 
-- Add, view (setup expense)
-- Manage categories (list)
-- show expense category wise, monthly wise
+- Setup Expense (Add, view)
+- Manage Categories (list)
+- Add Budget Monthly Wise (Add, Update)
+- Show Expense (category wise, monthly wise)
 - Simple SQLite database with SQLAlchemy
 - Lightweight CLI powered by click
 - Editable install for development
-
 ---
 
 ## Installation
 
 1. Clone the repository:
 
-   ```bash
-   git clone https://github.com/your-username/expense-tracker.git
-   cd expense-tracker
+    ```bash
+    git clone https://github.com/Mhd-Asjad/ExpenseMate.git
+    cd expense-tracker
     ```
 
 2. Create and activate a virtual environment:
@@ -51,10 +51,9 @@ It helps you manage expenses, categories, and budgets directly from your termina
 
 **run the CLI tool**
 
-    ```bash
-    expense --help
-    ```
-
+```bash
+expense --help
+```
 *Example:*
 
 ```bash
@@ -89,7 +88,7 @@ expense_tracker/
 │   │   └── expense_repo.py
 │   └── __init__.py
 │
-├── requirements.txt           # project Packages
+├── requirements.txt      # project Packages
 ├── pyproject.toml        # (optional) Modern build config
 ├── README.md             # Project documentation
 
