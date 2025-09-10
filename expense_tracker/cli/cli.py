@@ -1,4 +1,5 @@
 import click
+
 from datetime import datetime
 from expense_tracker.database.db import setup_database
 from expense_tracker.repositories.expense_repo import  add_expense , category_expenses , set_monthly_salary , get_monthly_budgets , get_total_expenses_for_month , display_category_expenses
@@ -6,7 +7,7 @@ import calendar
 from rich.console import Console
 from rich.table import Table
 from rich import box
-
+from expense_tracker.utils.utility import generate_budget_tracker_chart
 
 console = Console()
 
@@ -24,10 +25,29 @@ def init_db():
 @cli.command("add-expense")
 @click.argument('amount', type=float)
 @click.argument('description', type=str)
+@click.option(
+        '-ym',
+        '--yearmonth',
+        type=str,
+        required=False,
+        help="Year and month in YYYY-MM format (e.g., 2025-09). Defaults to current year-month.",
+
+    )
 @click.option('-c', '--category',type=click.Choice(['Food','Rent','Travel' , 'Misc']), default='Misc', help='Category of the expense.')
-def add(amount, description, category):
+def add(amount, description, category,yearmonth):
     """Add a new expense."""
-    add_expense(description, amount, category)
+    if yearmonth:
+        # validate and parse year-month
+        try:
+            expense_date = datetime.strptime(yearmonth, "%Y-%m").date()
+        except ValueError:
+            raise click.BadParameter("YearMonth must be in YYYY-MM format")
+    else:
+        # default = today’s year-month
+        today = datetime.date.today()
+        expense_date = today.replace(day=1)
+
+    add_expense(description, amount, category, expense_date)
     click.echo(f'Expense "{description}" of amount {amount} added under category "{category}".')
     
 @cli.command('show-category')
@@ -97,6 +117,10 @@ def show_expenses(month):
         console.print("[bold red]♨️ Your budget for the month has been exeeded![/bold red]")
     else :
         console.print(f"you can spend about [bold green]₹{daily_spend_allowance:,.2f}[/bold green] per day for the rest of the month.")
+        
+    generate_budget_tracker_chart(total_budget , amount_spent)
+    click.echo("\n📊 Generated budget chart: 'monthly_budget.png'")
 
+    
 if __name__ == '__main__':
     cli()

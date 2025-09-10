@@ -9,7 +9,7 @@ console = Console()
 
 # creating new db instance
     
-def add_expense(description, amount, category_name):
+def add_expense(description, amount, category_name, expense_date):
     with engine.connect() as connection:
         category_query = db.select(categories.c.id).where(categories.c.name == category_name)
         result = connection.execute(category_query).fetchone()
@@ -25,7 +25,8 @@ def add_expense(description, amount, category_name):
         insert_exp = db.insert(expenses).values(
             description=description,
             amount=amount,
-            category_id=category_id
+            category_id=category_id,
+            date=expense_date
         )
         connection.execute(insert_exp)
         connection.commit()
