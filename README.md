@@ -5,6 +5,8 @@ It helps you manage expenses, categories, and budgets directly from your termina
 
 ---
 
+<img width="1055" height="913" alt="ExpenseCli" src="https://github.com/user-attachments/assets/cc285cd8-8c78-47f6-823a-8ad6f05fa8cf" />
+
 ## Table of Contents
 
 - [Features](#features)
